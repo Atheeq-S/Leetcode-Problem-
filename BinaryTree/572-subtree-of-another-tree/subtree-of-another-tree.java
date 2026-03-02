@@ -13,26 +13,41 @@
  *     }
  * }
  */
+
+
+
+ /*
+
+ TIME AND SPACE COMPLEXITY
+
+ Serialization takes O(N)
+
+Substring check takes O(N + M) (average)
+
+Overall ≈ O(N + M) average case
+
+Better than O(N × M)
+
+*/
+
+
 class Solution {
+
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        if(root== null)
-        return false;
 
-        if(isSame(root,subRoot))
-        return true;
-        return isSubtree(root.left,subRoot)|| isSubtree(root.right,subRoot);
+        String rootStr = serialize(root);
+        String subStr = serialize(subRoot);
 
+        return rootStr.contains(subStr);
     }
 
-    public boolean isSame(TreeNode root,TreeNode subRoot){
-        if(root==null && subRoot==null)
-        return true;
-        if(root==null || subRoot==null)
-        return false;
-        if(root.val!=subRoot.val)
-        return false;
+    private String serialize(TreeNode node) {
+        if (node == null) {
+            return "null,";
+        }
 
-        return isSame(root.left,subRoot.left ) && isSame(root.right,subRoot.right);
-
+        return "," + node.val + "," +
+               serialize(node.left) +
+               serialize(node.right);
     }
 }
